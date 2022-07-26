@@ -2,6 +2,7 @@ package com.zm.letseat.restaurantslist.data.util
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import java.io.FileNotFoundException
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,15 +14,21 @@ internal class FileLoaderTest {
 
     @Test
     fun `loadFileFromAssetReturnExpectedResult`() {
+        // Given
         val givenJsonFilePath = "samples/restaurantslist/restaurants_list_response.json"
+        // Act
         val result = sut.loadFileFromAsset(givenJsonFilePath)
+        // Assert
         assertNotNull(result)
     }
 
     @Test
-    fun `loadNonExistFileFileFromAssetReturnNull`() {
+    fun `loadNonExistFileFileFromAssetThrowException`() {
+        // Given
         val givenJsonFilePath = "samples/restaurantslist/non_exist_file.json"
-        val result = sut.loadFileFromAsset(givenJsonFilePath)
-        assertNull(result)
+        // Act, Assert
+        assertThrows(
+            FileNotFoundException::class.java
+        ) { sut.loadFileFromAsset(givenJsonFilePath) }
     }
 }
