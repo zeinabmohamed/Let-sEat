@@ -1,15 +1,15 @@
-package com.zm.letseat.restaurantslist.data
+package com.zm.letseat.data.restaurant
 
 import com.squareup.moshi.Moshi
-import com.zm.letseat.restaurantslist.data.model.Restaurant
-import com.zm.letseat.restaurantslist.data.model.RestaurantsListResponse
-import com.zm.letseat.restaurantslist.data.util.FileLoader
+import com.zm.letseat.data.DataError
+import com.zm.letseat.data.model.RestaurantsListResponse
+import com.zm.letseat.data.util.FileLoader
 import kotlin.jvm.Throws
 
 /**
  * Fetch the restaurants list from the local data [restaurants_list_response.json]
  */
-class RestaurantsListLocalDataSource constructor(
+internal class RestaurantLocalDataSource constructor(
     private val fileLoader: FileLoader,
     private val moshi: Moshi,
 ) {

@@ -1,4 +1,4 @@
-package com.zm.letseat.restaurantslist.data.util
+package com.zm.letseat.data.util
 
 import android.content.Context
 import java.io.IOException

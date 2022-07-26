@@ -2,6 +2,7 @@ package com.zm.letseat.restaurantslist.data.util
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.zm.letseat.data.util.FileLoader
 import java.io.FileNotFoundException
 import org.junit.Assert.*
 import org.junit.Test

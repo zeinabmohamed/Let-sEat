@@ -1,4 +1,4 @@
-package com.zm.letseat.restaurantslist.data.model
+package com.zm.letseat.data.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

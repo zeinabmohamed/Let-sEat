@@ -2,10 +2,12 @@ package com.zm.letseat.restaurantslist.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.zm.letseat.restaurantslist.data.model.Restaurant
-import com.zm.letseat.restaurantslist.data.model.RestaurantsListResponse
-import com.zm.letseat.restaurantslist.data.model.SortingValues
-import com.zm.letseat.restaurantslist.data.util.FileLoader
+import com.zm.letseat.data.DataError
+import com.zm.letseat.data.restaurant.RestaurantLocalDataSource
+import com.zm.letseat.data.model.Restaurant
+import com.zm.letseat.data.model.RestaurantsListResponse
+import com.zm.letseat.data.model.SortingValues
+import com.zm.letseat.data.util.FileLoader
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -19,7 +21,7 @@ class RestaurantsListLocalDataSourceTest {
         .addLast(KotlinJsonAdapterFactory())
         .build()
     private val fileLoaderMock = mockk<FileLoader>()
-    private val sut = RestaurantsListLocalDataSource(
+    private val sut = RestaurantLocalDataSource(
         fileLoader = fileLoaderMock,
         moshi = moshi
     )
