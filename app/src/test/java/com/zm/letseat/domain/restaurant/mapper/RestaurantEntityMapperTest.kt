@@ -15,7 +15,17 @@ class RestaurantEntityMapperTest {
     fun `mapToDomain handle null values`() {
         // Given
         val restaurant = Restaurant(name = null, status = null)
-        val expected = RestaurantEntity(name = "", status = RestaurantStatus.OPEN)
+        val expected = RestaurantEntity(name = "",
+            status = RestaurantStatus.OPEN,
+            sortingValues = SortingValuesEntity(
+                bestMatch = 0f,
+                newest = 0f,
+                ratingAverage = 0f,
+                popularity = 0f,
+                averageProductPrice = 0f,
+                deliveryCosts = 0f,
+                minCost = 0f,
+            ))
         // Act
         val actual = sut.mapToDomain(restaurant)
         // Assert
@@ -36,7 +46,17 @@ class RestaurantEntityMapperTest {
                 deliveryCosts = 200f,
                 minCost = 1000f,
             ))
-        val expected = RestaurantEntity(name = "Tanoshii Sushi", status = RestaurantStatus.CLOSED)
+        val expected = RestaurantEntity(name = "Tanoshii Sushi",
+            status = RestaurantStatus.CLOSED,
+            sortingValues = SortingValuesEntity(
+                bestMatch = 0f,
+                newest = 96.0f,
+                ratingAverage = 4.5f,
+                popularity = 17f,
+                averageProductPrice = 1536f,
+                deliveryCosts = 200f,
+                minCost = 1000f,
+            ))
         // Act
         val actual = sut.mapToDomain(restaurant)
         // Assert

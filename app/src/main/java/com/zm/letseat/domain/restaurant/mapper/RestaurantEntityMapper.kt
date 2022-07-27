@@ -17,6 +17,16 @@ class RestaurantEntityMapper {
                 "order ahead" -> RestaurantStatus.ORDER_AHEAD
                 else -> defaultRestaurantStatus
             }
-        } ?: defaultRestaurantStatus
+        } ?: defaultRestaurantStatus,
+        sortingValues = SortingValuesEntity(
+            bestMatch = restaurant.sortingValues?.bestMatch ?: 0f,
+            newest = restaurant.sortingValues?.newest ?: 0f,
+            ratingAverage = restaurant.sortingValues?.ratingAverage ?: 0f,
+            popularity = restaurant.sortingValues?.popularity ?: 0f,
+            averageProductPrice = restaurant.sortingValues?.averageProductPrice ?: 0f,
+            deliveryCosts = restaurant.sortingValues?.deliveryCosts ?: 0f,
+            minCost = restaurant.sortingValues?.minCost ?: 0f,
+        )
     )
 }
+
