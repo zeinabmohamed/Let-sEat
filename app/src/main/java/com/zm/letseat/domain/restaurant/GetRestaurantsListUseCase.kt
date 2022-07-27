@@ -25,6 +25,7 @@ class GetRestaurantsListUseCase constructor(
             POPULARITY -> sortedByDescending { it.sortingValues.popularity }
             BEST_MATCH -> sortedByDescending { it.sortingValues.bestMatch }
             NEWEST -> sortedByDescending { it.sortingValues.newest }
+            RATING -> sortedByDescending { it.sortingValues.ratingAverage }
         }
     }
 }
