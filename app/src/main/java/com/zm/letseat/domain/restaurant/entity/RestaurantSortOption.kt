@@ -5,5 +5,7 @@ enum class RestaurantSortOption {
     POPULARITY,
     BEST_MATCH,
     NEWEST,
-    RATING
+    RATING,
+    DISTANCE,
+    PRODUCT_PRICE
 }

@@ -169,7 +169,7 @@ class GetRestaurantsListUseCaseTest {
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(distance = 7f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(DISTANCE)
         // Assert
         assertEquals(expected, actual)
     }
@@ -201,7 +201,7 @@ class GetRestaurantsListUseCaseTest {
                 sortingValues = SortingValuesEntity(averageProductPrice = 7f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(PRODUCT_PRICE)
         // Assert
         assertEquals(expected, actual)
     }
