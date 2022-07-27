@@ -3,6 +3,8 @@ package com.zm.letseat.domain.restaurant
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.SortingValues
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
+import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
+import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.mapper.RestaurantEntityMapper
 import com.zm.letseat.domain.restaurant.mapper.SortingValuesEntity
@@ -62,17 +64,15 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(popularity = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(popularity = 0f)),
-            RestaurantEntity(name = "item3",
-                sortingValues = SortingValuesEntity(popularity = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(popularity = 2f)),
-            RestaurantEntity(name = "item2",
-                sortingValues = SortingValuesEntity(popularity = 2.2f)),
+            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(popularity = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(popularity = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(popularity = 7f))
+            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(popularity = 2.2f)),
+            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(popularity = 2f)),
+            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(popularity = 1.2f)),
+            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(popularity = 0f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(sortBy = POPULARITY)
         // Assert
         assertEquals(expected, actual)
     }

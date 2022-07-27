@@ -6,7 +6,7 @@ import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 
 class RestaurantEntityMapper {
     private val defaultRestaurantName = ""
-    private val defaultRestaurantStatus = RestaurantStatus.OPEN
+    private val defaultRestaurantStatus = RestaurantStatus.CLOSED
 
     fun mapToDomain(restaurant: Restaurant) = RestaurantEntity(
         name = restaurant.name ?: defaultRestaurantName,

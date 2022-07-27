@@ -22,6 +22,7 @@ class GetRestaurantsListUseCase constructor(
     private fun List<RestaurantEntity>.sortedByOption(sortBy: RestaurantSortOption): List<RestaurantEntity> {
         return when (sortBy) {
             STATUS -> sortedBy { it.status }
+            POPULARITY -> sortedByDescending { it.sortingValues.popularity }
         }
     }
 }
