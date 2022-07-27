@@ -4,8 +4,8 @@ import com.zm.letseat.domain.restaurant.mapper.SortingValuesEntity
 
 data class RestaurantEntity(
     val name: String,
-    val status: RestaurantStatus,
-    val sortingValues: SortingValuesEntity,
+    val status: RestaurantStatus = RestaurantStatus.CLOSED,
+    val sortingValues: SortingValuesEntity = SortingValuesEntity(),
 )
 
 enum class RestaurantStatus(val value: String) {

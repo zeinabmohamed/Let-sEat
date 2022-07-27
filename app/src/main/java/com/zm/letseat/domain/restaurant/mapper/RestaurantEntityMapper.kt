@@ -22,6 +22,7 @@ class RestaurantEntityMapper {
             bestMatch = restaurant.sortingValues?.bestMatch ?: 0f,
             newest = restaurant.sortingValues?.newest ?: 0f,
             ratingAverage = restaurant.sortingValues?.ratingAverage ?: 0f,
+            distance = restaurant.sortingValues?.distance ?: 0f,
             popularity = restaurant.sortingValues?.popularity ?: 0f,
             averageProductPrice = restaurant.sortingValues?.averageProductPrice ?: 0f,
             deliveryCosts = restaurant.sortingValues?.deliveryCosts ?: 0f,

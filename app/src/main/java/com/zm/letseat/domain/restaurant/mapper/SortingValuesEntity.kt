@@ -1,11 +1,12 @@
 package com.zm.letseat.domain.restaurant.mapper
 
 data class SortingValuesEntity(
-    val bestMatch: Float,
-    val newest: Float,
-    val ratingAverage: Float,
-    val popularity: Float,
-    val averageProductPrice: Float,
-    val deliveryCosts: Float,
-    val minCost: Float,
+    val bestMatch: Float = 0f,
+    val newest: Float = 0f,
+    val ratingAverage: Float = 0f,
+    val distance: Float = 0f,
+    val popularity: Float = 0f,
+    val averageProductPrice: Float = 0f,
+    val deliveryCosts: Float = 0f,
+    val minCost: Float = 0f,
 )
