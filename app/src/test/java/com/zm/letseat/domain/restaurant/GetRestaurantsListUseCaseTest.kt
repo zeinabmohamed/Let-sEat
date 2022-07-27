@@ -22,11 +22,6 @@ class GetRestaurantsListUseCaseTest {
         mapper = RestaurantEntityMapper()
     )
 
-    @Before
-    fun setup() {
-
-    }
-
     @Test
     fun `GetRestaurantsList return default order by status`() = runBlockingTest {
         // Given
@@ -66,9 +61,11 @@ class GetRestaurantsListUseCaseTest {
         val expected = listOf(
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(popularity = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(popularity = 4f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(popularity = 2.2f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(popularity = 2.2f)),
             RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(popularity = 2f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(popularity = 1.2f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(popularity = 1.2f)),
             RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(popularity = 0f))
         )
         // Act
@@ -89,15 +86,15 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(bestMatch = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(bestMatch = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(bestMatch = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(bestMatch = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(bestMatch = 2.2f)),
+            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(bestMatch = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(bestMatch = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(bestMatch = 7f))
+            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(bestMatch = 2.2f)),
+            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(bestMatch = 2f)),
+            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(bestMatch = 1.2f)),
+            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(bestMatch = 0f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(BEST_MATCH)
         // Assert
         assertEquals(expected, actual)
     }
@@ -139,12 +136,18 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(ratingAverage = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(ratingAverage = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(ratingAverage = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(ratingAverage = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(ratingAverage = 2.2f)),
-            RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(ratingAverage = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(ratingAverage = 7f))
+            RestaurantEntity(name = "item4",
+                sortingValues = SortingValuesEntity(ratingAverage = 0f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(ratingAverage = 1.2f)),
+            RestaurantEntity(name = "item5",
+                sortingValues = SortingValuesEntity(ratingAverage = 2f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(ratingAverage = 2.2f)),
+            RestaurantEntity(name = "item6",
+                sortingValues = SortingValuesEntity(ratingAverage = 4f)),
+            RestaurantEntity(name = "item1",
+                sortingValues = SortingValuesEntity(ratingAverage = 7f))
         )
         // Act
         val actual = sut.invoke()
@@ -153,7 +156,7 @@ class GetRestaurantsListUseCaseTest {
     }
 
     @Test
-    fun `GetRestaurantsList return expected order by distance`()  = runBlockingTest {
+    fun `GetRestaurantsList return expected order by distance`() = runBlockingTest {
         // Given
         coEvery { repository.getRestaurants() } returns listOf(
             Restaurant(name = "item1", sortingValues = SortingValues(distance = 7f)),
@@ -179,7 +182,7 @@ class GetRestaurantsListUseCaseTest {
 
 
     @Test
-    fun `GetRestaurantsList return expected order by average product price`()  = runBlockingTest {
+    fun `GetRestaurantsList return expected order by average product price`() = runBlockingTest {
         // Given
         coEvery { repository.getRestaurants() } returns listOf(
             Restaurant(name = "item1", sortingValues = SortingValues(averageProductPrice = 7f)),
@@ -190,12 +193,18 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(averageProductPrice = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(averageProductPrice = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(averageProductPrice = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(averageProductPrice = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(averageProductPrice = 2.2f)),
-            RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(averageProductPrice = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(averageProductPrice = 7f))
+            RestaurantEntity(name = "item4",
+                sortingValues = SortingValuesEntity(averageProductPrice = 0f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(averageProductPrice = 1.2f)),
+            RestaurantEntity(name = "item5",
+                sortingValues = SortingValuesEntity(averageProductPrice = 2f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(averageProductPrice = 2.2f)),
+            RestaurantEntity(name = "item6",
+                sortingValues = SortingValuesEntity(averageProductPrice = 4f)),
+            RestaurantEntity(name = "item1",
+                sortingValues = SortingValuesEntity(averageProductPrice = 7f))
         )
         // Act
         val actual = sut.invoke()
@@ -204,7 +213,7 @@ class GetRestaurantsListUseCaseTest {
     }
 
     @Test
-    fun `GetRestaurantsList return expected order by delivery`()= runBlockingTest{
+    fun `GetRestaurantsList return expected order by delivery`() = runBlockingTest {
         // Given
         coEvery { repository.getRestaurants() } returns listOf(
             Restaurant(name = "item1", sortingValues = SortingValues(deliveryCosts = 7f)),
@@ -215,12 +224,18 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(deliveryCosts = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(deliveryCosts = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(deliveryCosts = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(deliveryCosts = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(deliveryCosts = 2.2f)),
-            RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(deliveryCosts = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(deliveryCosts = 7f))
+            RestaurantEntity(name = "item4",
+                sortingValues = SortingValuesEntity(deliveryCosts = 0f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(deliveryCosts = 1.2f)),
+            RestaurantEntity(name = "item5",
+                sortingValues = SortingValuesEntity(deliveryCosts = 2f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(deliveryCosts = 2.2f)),
+            RestaurantEntity(name = "item6",
+                sortingValues = SortingValuesEntity(deliveryCosts = 4f)),
+            RestaurantEntity(name = "item1",
+                sortingValues = SortingValuesEntity(deliveryCosts = 7f))
         )
         // Act
         val actual = sut.invoke()
@@ -230,27 +245,30 @@ class GetRestaurantsListUseCaseTest {
     }
 
     @Test
-    fun `GetRestaurantsList return expected order by costs or the minimum cost`()  = runBlockingTest {
-        // Given
-        coEvery { repository.getRestaurants() } returns listOf(
-            Restaurant(name = "item1", sortingValues = SortingValues(minCost = 7f)),
-            Restaurant(name = "item2", sortingValues = SortingValues(minCost = 2.2f)),
-            Restaurant(name = "item3", sortingValues = SortingValues(minCost = 1.2f)),
-            Restaurant(name = "item4", sortingValues = SortingValues(minCost = 0f)),
-            Restaurant(name = "item5", sortingValues = SortingValues(minCost = 2f)),
-            Restaurant(name = "item6", sortingValues = SortingValues(minCost = 4f))
-        )
-        val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(minCost = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(minCost = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(minCost = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(minCost = 2.2f)),
-            RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(minCost = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(minCost = 7f))
-        )
-        // Act
-        val actual = sut.invoke()
-        // Assert
-        assertEquals(expected, actual)
-    }
+    fun `GetRestaurantsList return expected order by costs or the minimum cost`() =
+        runBlockingTest {
+            // Given
+            coEvery { repository.getRestaurants() } returns listOf(
+                Restaurant(name = "item1", sortingValues = SortingValues(minCost = 7f)),
+                Restaurant(name = "item2", sortingValues = SortingValues(minCost = 2.2f)),
+                Restaurant(name = "item3", sortingValues = SortingValues(minCost = 1.2f)),
+                Restaurant(name = "item4", sortingValues = SortingValues(minCost = 0f)),
+                Restaurant(name = "item5", sortingValues = SortingValues(minCost = 2f)),
+                Restaurant(name = "item6", sortingValues = SortingValues(minCost = 4f))
+            )
+            val expected = listOf(
+                RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(minCost = 0f)),
+                RestaurantEntity(name = "item3",
+                    sortingValues = SortingValuesEntity(minCost = 1.2f)),
+                RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(minCost = 2f)),
+                RestaurantEntity(name = "item2",
+                    sortingValues = SortingValuesEntity(minCost = 2.2f)),
+                RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(minCost = 4f)),
+                RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(minCost = 7f))
+            )
+            // Act
+            val actual = sut.invoke()
+            // Assert
+            assertEquals(expected, actual)
+        }
 }

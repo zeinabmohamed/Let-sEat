@@ -23,6 +23,7 @@ class GetRestaurantsListUseCase constructor(
         return when (sortBy) {
             STATUS -> sortedBy { it.status }
             POPULARITY -> sortedByDescending { it.sortingValues.popularity }
+            BEST_MATCH -> sortedByDescending { it.sortingValues.bestMatch }
         }
     }
 }
