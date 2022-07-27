@@ -232,7 +232,7 @@ class GetRestaurantsListUseCaseTest {
                 sortingValues = SortingValuesEntity(deliveryCosts = 7f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(DELIVERY_FEES)
         // Assert
         assertEquals(expected, actual)
 
@@ -252,16 +252,14 @@ class GetRestaurantsListUseCaseTest {
             )
             val expected = listOf(
                 RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(minCost = 0f)),
-                RestaurantEntity(name = "item3",
-                    sortingValues = SortingValuesEntity(minCost = 1.2f)),
+                RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(minCost = 1.2f)),
                 RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(minCost = 2f)),
-                RestaurantEntity(name = "item2",
-                    sortingValues = SortingValuesEntity(minCost = 2.2f)),
+                RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(minCost = 2.2f)),
                 RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(minCost = 4f)),
                 RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(minCost = 7f))
             )
             // Act
-            val actual = sut.invoke()
+            val actual = sut.invoke(MIN_COST)
             // Assert
             assertEquals(expected, actual)
         }

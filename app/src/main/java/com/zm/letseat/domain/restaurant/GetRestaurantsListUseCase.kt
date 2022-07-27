@@ -28,6 +28,8 @@ class GetRestaurantsListUseCase constructor(
             RATING -> sortedByDescending { it.sortingValues.ratingAverage }
             DISTANCE -> sortedBy { it.sortingValues.distance }
             PRODUCT_PRICE -> sortedBy { it.sortingValues.averageProductPrice }
+            DELIVERY_FEES -> sortedBy { it.sortingValues.deliveryCosts }
+            MIN_COST -> sortedBy { it.sortingValues.minCost }
         }
     }
 }
