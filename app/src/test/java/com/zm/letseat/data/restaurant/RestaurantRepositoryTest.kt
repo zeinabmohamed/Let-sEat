@@ -4,8 +4,10 @@ import com.zm.letseat.data.DataError
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.RestaurantsListResponse
 import com.zm.letseat.data.model.SortingValues
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -17,9 +19,9 @@ class RestaurantRepositoryTest {
     )
 
     @Test
-    fun `getRestaurants return empty list for Null result`() {
+    fun `getRestaurants return empty list for Null result`() = runBlockingTest {
         // Given
-        every { dataSource.getRestaurants() } returns RestaurantsListResponse(restaurants = null)
+        coEvery { dataSource.getRestaurants() } returns RestaurantsListResponse(restaurants = null)
         val expectedResult = emptyList<Restaurant>()
         // Act
         val result = sut.getRestaurants()
@@ -28,9 +30,9 @@ class RestaurantRepositoryTest {
     }
 
     @Test
-    fun `getRestaurants return empty list for DataError result`() {
+    fun `getRestaurants return empty list for DataError result`() = runBlockingTest {
         // Given
-        every { dataSource.getRestaurants() } throws DataError("Fail to load data")
+        coEvery { dataSource.getRestaurants() } throws DataError("Fail to load data")
         val expectedResult = emptyList<Restaurant>()
         // Act
         val result = sut.getRestaurants()
@@ -39,9 +41,9 @@ class RestaurantRepositoryTest {
     }
 
     @Test
-    fun `getRestaurants return expected result`() {
+    fun `getRestaurants return expected result`() = runBlockingTest {
         // Given
-        every { dataSource.getRestaurants() } returns successRestaurantsResponse
+        coEvery { dataSource.getRestaurants() } returns successRestaurantsResponse
         val expectedResult = successRestaurantsResponse.restaurants
         // Act
         val result = sut.getRestaurants()

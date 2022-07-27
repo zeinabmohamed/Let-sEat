@@ -9,7 +9,7 @@ import com.zm.letseat.domain.restaurant.IRestaurantRepository
 internal class RestaurantRepository constructor(
     private val dataSource: RestaurantLocalDataSource,
 ) : IRestaurantRepository {
-    override fun getRestaurants(): List<Restaurant> = runCatching {
+    override suspend fun getRestaurants(): List<Restaurant> = runCatching {
         dataSource.getRestaurants()?.restaurants ?: emptyList()
     }.getOrDefault(emptyList())
 }

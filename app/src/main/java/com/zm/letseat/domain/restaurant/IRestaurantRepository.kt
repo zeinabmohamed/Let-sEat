@@ -7,5 +7,5 @@ import com.zm.letseat.data.model.Restaurant
  */
 interface IRestaurantRepository {
 
-    fun getRestaurants(): List<Restaurant>
+    suspend fun getRestaurants(): List<Restaurant>
 }

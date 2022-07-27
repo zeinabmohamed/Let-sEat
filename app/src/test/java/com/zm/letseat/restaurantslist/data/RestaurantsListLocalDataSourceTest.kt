@@ -3,16 +3,19 @@ package com.zm.letseat.restaurantslist.data
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.zm.letseat.data.DataError
-import com.zm.letseat.data.restaurant.RestaurantLocalDataSource
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.RestaurantsListResponse
 import com.zm.letseat.data.model.SortingValues
+import com.zm.letseat.data.restaurant.RestaurantLocalDataSource
 import com.zm.letseat.data.util.FileLoader
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import org.junit.function.ThrowingRunnable
 
 
 class RestaurantsListLocalDataSourceTest {
@@ -27,28 +30,28 @@ class RestaurantsListLocalDataSourceTest {
     )
 
     @Test
-    fun `getRestaurants throw DataError when empty file`() {
+    fun `getRestaurants throw DataError when empty file`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("")
         // Act, Assert
         assertThrows(DataError::class.java) {
-            sut.getRestaurants()
+            runBlocking { sut.getRestaurants() }
         }
     }
 
     @Test
-    fun `getRestaurants throw DataError when invalid json`() {
+    fun `getRestaurants throw DataError when invalid json`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("{restaurants:[}")
 
         // Act, Assert
         assertThrows(DataError::class.java) {
-            sut.getRestaurants()
+            runBlocking { sut.getRestaurants() }
         }
     }
 
     @Test
-    fun `getRestaurants throw DataError when empty json`() {
+    fun `getRestaurants throw DataError when empty json`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("{}")
         val expectedResult = nullResult()
@@ -60,18 +63,18 @@ class RestaurantsListLocalDataSourceTest {
 
 
     @Test
-    fun `getRestaurants throw DataError when Null restaurants`() {
+    fun `getRestaurants throw DataError when Null restaurants`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("{restaurants:null}")
 
         // Act, Assert
         assertThrows(DataError::class.java) {
-            sut.getRestaurants()
+            runBlocking { sut.getRestaurants() }
         }
     }
 
     @Test
-    fun `getRestaurants return expected null values`() {
+    fun `getRestaurants return expected null values`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("{\n" +
                 "    \"restaurants\": [{\n" +
@@ -97,7 +100,7 @@ class RestaurantsListLocalDataSourceTest {
     }
 
     @Test
-    fun `getRestaurants return expected result`() {
+    fun `getRestaurants return expected result`() = runBlockingTest {
         // Given
         every { fileLoaderMock.loadFileFromAsset(any()) }.returns("{\n" +
                 "    \"restaurants\": [{\n" +
