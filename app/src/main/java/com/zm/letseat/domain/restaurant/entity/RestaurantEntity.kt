@@ -8,6 +8,9 @@ data class RestaurantEntity(
     val sortingValues: SortingValuesEntity = SortingValuesEntity(),
 )
 
+/**
+ * RestaurantStatus ordered should be respected
+ */
 enum class RestaurantStatus(val value: String) {
     OPEN("open"),
     ORDER_AHEAD("order ahead"),
