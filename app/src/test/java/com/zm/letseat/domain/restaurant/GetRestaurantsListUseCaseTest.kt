@@ -111,15 +111,15 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item6", sortingValues = SortingValues(newest = 4f))
         )
         val expected = listOf(
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(newest = 0f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(newest = 1.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(newest = 2f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(newest = 2.2f)),
+            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(newest = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(newest = 4f)),
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(newest = 7f))
+            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(newest = 2.2f)),
+            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(newest = 2f)),
+            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(newest = 1.2f)),
+            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(newest = 0f))
         )
         // Act
-        val actual = sut.invoke()
+        val actual = sut.invoke(NEWEST)
         // Assert
         assertEquals(expected, actual)
     }
