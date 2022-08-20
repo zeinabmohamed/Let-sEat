@@ -3,16 +3,14 @@ package com.zm.letseat.domain.restaurant
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.SortingValues
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
-import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.mapper.RestaurantEntityMapper
-import com.zm.letseat.domain.restaurant.mapper.SortingValuesEntity
+import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
 
 class GetRestaurantsListUseCaseTest {

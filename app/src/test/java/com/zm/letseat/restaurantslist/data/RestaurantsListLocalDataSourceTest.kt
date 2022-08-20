@@ -134,6 +134,7 @@ private fun successRestaurantsList() = RestaurantsListResponse(
         sortingValues = SortingValues(
             bestMatch = 0f,
             newest = 96.0f,
+            distance = 1190f,
             ratingAverage = 4.5f,
             popularity = 17f,
             averageProductPrice = 1536f,

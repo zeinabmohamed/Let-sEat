@@ -3,6 +3,7 @@ package com.zm.letseat.domain.restaurant.mapper
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
+import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
 
 class RestaurantEntityMapper {
     private val defaultRestaurantName = ""

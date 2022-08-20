@@ -1,4 +1,4 @@
-package com.zm.letseat.domain.restaurant.mapper
+package com.zm.letseat.domain.restaurant.entity
 
 data class SortingValuesEntity(
     val bestMatch: Float = 0f,

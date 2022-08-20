@@ -4,6 +4,7 @@ import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.SortingValues
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
+import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
 import org.junit.Assert
 import org.junit.Test
 
@@ -16,7 +17,7 @@ class RestaurantEntityMapperTest {
         // Given
         val restaurant = Restaurant(name = null, status = null)
         val expected = RestaurantEntity(name = "",
-            status = RestaurantStatus.OPEN,
+            status = RestaurantStatus.CLOSED,
             sortingValues = SortingValuesEntity(
                 bestMatch = 0f,
                 newest = 0f,
