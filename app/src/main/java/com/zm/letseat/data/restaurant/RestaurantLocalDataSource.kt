@@ -4,12 +4,13 @@ import com.squareup.moshi.Moshi
 import com.zm.letseat.data.DataError
 import com.zm.letseat.data.model.RestaurantsListResponse
 import com.zm.letseat.data.util.FileLoader
+import javax.inject.Inject
 import kotlin.jvm.Throws
 
 /**
  * Fetch the restaurants list from the local data [restaurants_list_response.json]
  */
-internal class RestaurantLocalDataSource constructor(
+internal class RestaurantLocalDataSource @Inject constructor(
     private val fileLoader: FileLoader,
     private val moshi: Moshi,
 ) {

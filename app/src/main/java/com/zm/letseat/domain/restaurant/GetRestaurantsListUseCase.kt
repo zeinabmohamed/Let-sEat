@@ -5,11 +5,12 @@ import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.mapper.RestaurantEntityMapper
+import javax.inject.Inject
 
 /**
  * Get [Restaurant] list filtered by
  */
-class GetRestaurantsListUseCase constructor(
+class GetRestaurantsListUseCase @Inject constructor(
     private val restaurantRepository: IRestaurantRepository,
     private val mapper: RestaurantEntityMapper,
 ) {
