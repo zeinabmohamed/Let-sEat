@@ -15,7 +15,7 @@ internal class RestaurantLocalDataSource constructor(
 ) {
 
     @Throws(DataError::class)
-    fun getRestaurants(): RestaurantsListResponse? = runCatching {
+    suspend fun getRestaurants(): RestaurantsListResponse? = runCatching {
         moshi.adapter(RestaurantsListResponse::class.java)
             .fromJson(fileLoader.loadFileFromAsset(
                 RESTAURANT_LIST_JSON_FILE_PATH
