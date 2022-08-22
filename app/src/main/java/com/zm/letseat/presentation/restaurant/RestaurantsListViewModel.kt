@@ -30,15 +30,17 @@ class RestaurantsListViewModel constructor(
         viewModelScope.launch {
             uiState = RestaurantsListUiState(loading = true)
             val restaurantsList = getRestaurantsListUseCase.invoke(sortByOption)
-            uiState = RestaurantsListUiState(loading = false,
+            uiState = RestaurantsListUiState(
+                loading = false,
                 sortByOption = sortByOption,
-                restaurants = restaurantsList)
+                restaurants = restaurantsList
+            )
         }
     }
 }
 
 data class RestaurantsListUiState(
-    open val loading: Boolean = false,
-    open val sortByOption: RestaurantSortOption = RestaurantSortOption.STATUS,
-    open val restaurants: List<RestaurantEntity> = emptyList(),
+    val loading: Boolean = false,
+    val sortByOption: RestaurantSortOption = RestaurantSortOption.STATUS,
+    val restaurants: List<RestaurantEntity> = emptyList(),
 )
