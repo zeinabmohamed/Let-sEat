@@ -3,7 +3,7 @@ package com.zm.letseat.presentation.restaurant.model
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 
-class RestaurantUi(val name: String, val status: String, val sortingValue: String)
+data class RestaurantUi(val name: String, val status: String, val sortingValue: String)
 
 infix fun RestaurantEntity.sortedBy(sortingOption: RestaurantSortOption): String {
     return when (sortingOption) {
