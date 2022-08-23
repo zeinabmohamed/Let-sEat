@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -17,6 +19,30 @@ import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.presentation.restaurant.model.RestaurantUi
 
+@Preview
+@Composable
+private fun RestaurantsList(
+    modifier: Modifier = Modifier,
+    sortingOption: RestaurantSortOption = RestaurantSortOption.RATING,
+    restaurantList: List<RestaurantUi> = listOf(
+        RestaurantUi(name = "Tandoori Express",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"),
+        RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22")
+    ),
+) {
+    LazyColumn {
+        items(restaurantList) { restaurantItem ->
+            RestaurantItem(
+                modifier = modifier,
+                sortingOption = sortingOption,
+                restaurantUi = restaurantItem
+            )
+        }
+    }
+}
 
 /**
  * The restaurant item should contain :
@@ -24,14 +50,11 @@ import com.zm.letseat.presentation.restaurant.model.RestaurantUi
  * the current opening state,
  * the selected sorting and the sort value for a restaurant.
  */
-@Preview
 @Composable
 private fun RestaurantItem(
     modifier: Modifier = Modifier,
     sortingOption: RestaurantSortOption = RestaurantSortOption.RATING,
-    restaurantUi: RestaurantUi = RestaurantUi(name = "Tandoori Express",
-        status = RestaurantStatus.CLOSED.toString(),
-        sortingValue = "22"),
+    restaurantUi: RestaurantUi,
 ) {
     Card(modifier = modifier.padding(8.dp)) {
         Column(modifier
