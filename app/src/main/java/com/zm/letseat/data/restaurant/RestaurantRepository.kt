@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Responsible to load data from data source
  */
-internal class RestaurantRepository @Inject constructor(
+class RestaurantRepository @Inject constructor(
     private val dataSource: RestaurantLocalDataSource,
 ) : IRestaurantRepository {
     override suspend fun getRestaurants(): List<Restaurant> = runCatching {

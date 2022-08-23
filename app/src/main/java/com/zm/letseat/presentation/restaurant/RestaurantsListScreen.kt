@@ -29,35 +29,16 @@ import com.zm.letseat.presentation.restaurant.model.RestaurantUi
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2, heightDp = 300)
 @Composable
-fun RestaurantsListScreen() {
+fun RestaurantsListScreen(viewModel: RestaurantsListViewModel = viewModel()) {
     val modifier = Modifier
-    val sortingOption = RestaurantSortOption.RATING
-    val restaurantList = listOf(
-        RestaurantUi(name = "Tandoori Express",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22"),
-        RestaurantUi(name = "Tandoori Express2",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22"),
-        RestaurantUi(name = "Tandoori Express2",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22"),
-        RestaurantUi(name = "Tandoori Express2",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22"),
-        RestaurantUi(name = "Tandoori Express2",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22"), RestaurantUi(name = "Tandoori Express2",
-            status = RestaurantStatus.CLOSED.toString(),
-            sortingValue = "22")
-    )
+    val uiState = viewModel.uiState //previewLoadedUiState
     Scaffold(
         topBar = {
-            RestaurantsListTopAppBar(modifier, sortingOption)
+            RestaurantsListTopAppBar(modifier, uiState.sortByOption)
         },
         backgroundColor = MaterialTheme.colors.surface
     ) { padding ->
-        RestaurantsList(modifier.padding(padding), sortingOption, restaurantList)
+        RestaurantsList(modifier.padding(padding), uiState.sortByOption, uiState.restaurants)
     }
 }
 
@@ -133,3 +114,27 @@ private fun RestaurantItem(
         }
     }
 }
+
+private val previewLoadedUiState = RestaurantsListUiState(
+    loading = false,
+    sortByOption = RestaurantSortOption.RATING,
+    restaurants = listOf(
+        RestaurantUi(name = "Tandoori Express",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"),
+        RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"),
+        RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"),
+        RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"),
+        RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22"), RestaurantUi(name = "Tandoori Express2",
+            status = RestaurantStatus.CLOSED.toString(),
+            sortingValue = "22")
+    )
+)

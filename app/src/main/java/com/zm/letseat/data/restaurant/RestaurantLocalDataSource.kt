@@ -10,7 +10,7 @@ import kotlin.jvm.Throws
 /**
  * Fetch the restaurants list from the local data [restaurants_list_response.json]
  */
-internal class RestaurantLocalDataSource @Inject constructor(
+class RestaurantLocalDataSource @Inject constructor(
     private val fileLoader: FileLoader,
     private val moshi: Moshi,
 ) {
