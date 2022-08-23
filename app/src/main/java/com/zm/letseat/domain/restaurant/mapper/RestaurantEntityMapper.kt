@@ -4,8 +4,9 @@ import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
+import javax.inject.Inject
 
-class RestaurantEntityMapper {
+class RestaurantEntityMapper @Inject constructor(){
     private val defaultRestaurantName = ""
     private val defaultRestaurantStatus = RestaurantStatus.CLOSED
 

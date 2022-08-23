@@ -10,8 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.zm.letseat.presentation.restaurant.model.RestaurantUi
 import com.zm.letseat.presentation.restaurant.model.sortedBy
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RestaurantsListViewModel constructor(
+@HiltViewModel
+class RestaurantsListViewModel @Inject constructor(
     private val getRestaurantsListUseCase: GetRestaurantsListUseCase,
 ) : ViewModel() {
     private val defaultSortByOption = RestaurantSortOption.STATUS
