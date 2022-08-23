@@ -8,7 +8,8 @@ import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
+import com.zm.letseat.presentation.restaurant.model.RestaurantUi
+import com.zm.letseat.presentation.restaurant.model.sortedBy
 
 class RestaurantsListViewModel constructor(
     private val getRestaurantsListUseCase: GetRestaurantsListUseCase,
@@ -29,7 +30,12 @@ class RestaurantsListViewModel constructor(
     ) {
         viewModelScope.launch {
             uiState = RestaurantsListUiState(loading = true)
-            val restaurantsList = getRestaurantsListUseCase.invoke(sortByOption)
+            val restaurantsList = getRestaurantsListUseCase.invoke(sortByOption).map {
+                RestaurantUi(
+                    name = it.name,
+                    status = it.status,
+                    sortingValue = (it sortedBy sortByOption))
+            }
             uiState = RestaurantsListUiState(
                 loading = false,
                 sortByOption = sortByOption,
@@ -42,5 +48,5 @@ class RestaurantsListViewModel constructor(
 data class RestaurantsListUiState(
     val loading: Boolean = false,
     val sortByOption: RestaurantSortOption = RestaurantSortOption.STATUS,
-    val restaurants: List<RestaurantEntity> = emptyList(),
+    val restaurants: List<RestaurantUi> = emptyList(),
 )
