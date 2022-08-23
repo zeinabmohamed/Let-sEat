@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zm.letseat.R
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
@@ -28,7 +29,7 @@ import com.zm.letseat.presentation.restaurant.model.RestaurantUi
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2, heightDp = 300)
 @Composable
-private fun RestaurantsListScreen() {
+fun RestaurantsListScreen() {
     val modifier = Modifier
     val sortingOption = RestaurantSortOption.RATING
     val restaurantList = listOf(
