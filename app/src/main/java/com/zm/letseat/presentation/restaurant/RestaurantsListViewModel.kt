@@ -33,7 +33,7 @@ class RestaurantsListViewModel constructor(
             val restaurantsList = getRestaurantsListUseCase.invoke(sortByOption).map {
                 RestaurantUi(
                     name = it.name,
-                    status = it.status,
+                    status = it.status.toString(),
                     sortingValue = (it sortedBy sortByOption))
             }
             uiState = RestaurantsListUiState(
