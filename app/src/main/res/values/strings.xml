@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LetsEat</string>
+    <string name="restaurants_list">Restaurants list</string>
 </resources>
