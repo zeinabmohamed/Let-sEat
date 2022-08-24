@@ -22,7 +22,7 @@ import com.zm.letseat.presentation.restaurant.model.RestaurantUi
 
 
 @Composable
-internal fun RestaurantsList(
+fun RestaurantsList(
     modifier: Modifier = Modifier,
     sortingOption: RestaurantSortOption,
     restaurantList: List<RestaurantUi>,

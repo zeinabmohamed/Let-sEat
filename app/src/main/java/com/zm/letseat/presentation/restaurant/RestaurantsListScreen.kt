@@ -64,7 +64,7 @@ fun RestaurantsListScreenContent(
             RestaurantsListLoading()
         } else {
             if (uiState.restaurants.isEmpty()) {
-                TODO("Setup empty state")
+                //TODO("Setup empty state")
             } else {
                 RestaurantsList(modifier.padding(padding),
                     uiState.sortByOption,
