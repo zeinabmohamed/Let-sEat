@@ -7,7 +7,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasAnyChild
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onChildAt
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -27,7 +26,7 @@ class RestaurantsListScreenTest {
     fun `validateLoadingStateRestaurantsListScreenContent`() {
         // Start the app
         composeTestRule.setContent {
-            RestaurantsListScreenContent(Modifier, uiState = previewLoadingUiState, {})
+            RestaurantsListScreenContent(Modifier, uiState = previewLoadingUiState, {}, )
         }
         composeTestRule.onNodeWithText("Restaurants list").assertIsDisplayed()
         composeTestRule.onNodeWithTag("restaurantsListTag").assertDoesNotExist()
@@ -39,7 +38,7 @@ class RestaurantsListScreenTest {
     fun `validateLoadedStateRestaurantsListScreenContent`() {
         // Start the app
         composeTestRule.setContent {
-            RestaurantsListScreenContent(Modifier, uiState = previewLoadedUiState, {})
+            RestaurantsListScreenContent(Modifier, uiState = previewLoadedUiState, {}, )
         }
         composeTestRule.onNodeWithText("Restaurants list").assertIsDisplayed()
         composeTestRule.onNodeWithTag("restaurantsListTag")
@@ -60,7 +59,7 @@ class RestaurantsListScreenTest {
     fun `validateEmptyStateRestaurantsListScreenContent`() {
         // Start the app
         composeTestRule.setContent {
-            RestaurantsListScreenContent(Modifier, uiState = previewEmptyUiState, {})
+            RestaurantsListScreenContent(Modifier, uiState = previewEmptyUiState, {}, )
         }
         composeTestRule.onNodeWithText("Restaurants list").assertIsDisplayed()
         composeTestRule.onNodeWithTag("restaurantsListTag").assertDoesNotExist()

@@ -1,8 +1,8 @@
 package com.zm.letseat.presentation.restaurant
 
+import com.zm.letseat.domain.restaurant.FilterRestaurantsUseCase
 import com.zm.letseat.domain.restaurant.GetRestaurantsListUseCase
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
-import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
@@ -41,6 +41,7 @@ class RestaurantsListViewModelTest {
             sortingValue = "22.0"))
 
     private val getRestaurantsListUseCaseMocked: GetRestaurantsListUseCase = mockk()
+    private val filterRestaurantsUseCase: FilterRestaurantsUseCase = mockk()
     private lateinit var sut: RestaurantsListViewModel
 
     private val dispatcher = UnconfinedTestDispatcher()
@@ -57,7 +58,8 @@ class RestaurantsListViewModelTest {
             )
         } returns givenSortedRestaurantsListByRating
         sut = RestaurantsListViewModel(
-            getRestaurantsListUseCaseMocked
+            getRestaurantsListUseCaseMocked,
+            filterRestaurantsUseCase
         )
     }
 

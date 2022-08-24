@@ -3,4 +3,5 @@
     <string name="restaurants_list">Restaurants list</string>
     <string name="loading">Loading</string>
     <string name="empty_list">No Data</string>
+    <string name="placeholder_search">Search by name</string>
 </resources>
