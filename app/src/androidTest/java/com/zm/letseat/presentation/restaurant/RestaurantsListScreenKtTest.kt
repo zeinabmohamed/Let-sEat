@@ -23,6 +23,19 @@ class RestaurantsListScreenTest {
     val composeTestRule = createComposeRule()
 
     @Test
+    fun `validateLoadingStateRestaurantsListScreenContent`() {
+        // Start the app
+        composeTestRule.setContent {
+            RestaurantsListScreenContent(Modifier, uiState = previewLoadingUiState, {})
+        }
+        composeTestRule.onNodeWithText("Restaurants list").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("restaurantsListTag").assertDoesNotExist()
+        composeTestRule.onNodeWithText("Loading").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("LoadingProgressIndicator").assertIsDisplayed()
+
+    }
+
+    @Test
     fun `validateLoadedStateRestaurantsListScreenContent`() {
         // Start the app
         composeTestRule.setContent {
@@ -40,8 +53,13 @@ class RestaurantsListScreenTest {
             .assert(hasAnyChild(hasText("Tandoori Express")))
             .assert(hasAnyChild(hasText("RATING")))
             .assert(hasAnyChild(hasText("22")))
+
     }
 }
+
+private val previewLoadingUiState = RestaurantsListUiState(
+    loading = true,
+)
 
 private val previewLoadedUiState = RestaurantsListUiState(
     loading = false,
