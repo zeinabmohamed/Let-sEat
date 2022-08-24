@@ -10,7 +10,7 @@ Welcome
 ## Features
 |Load restaurants sorted by default initially.| <br><img src="images/image1.png" alt="image1" width="240"></img> <br>|
 |:-----:|:---------:|
-|Show restaurants sorted based on<br>STATUS<br><br>POPULARITY<br><br>BEST_MATCH<br><br>NEWEST<br><br>RATING<br><br>DISTANCE<br><br>PRODUCT_PRICE<br><br>DELIVERY_FEES<br><br>MIN_COST<br>| <br><img src="images/image2.png" alt="image2" width="240"></img>  <img src="images/image3.png" alt="image3" width="240"></img><br>|
+|Show restaurants sorted based on<br>STATUS<br><br>POPULARITY<br><br>BEST_MATCH<br><br>NEWEST<br><br>RATING<br><br>DISTANCE<br><br>PRODUCT_PRICE<br><br>DELIVERY_FEES<br><br>MIN_COST<br>| <br><img src="images/image2.png" alt="image2" width="240"></img> <img src="images/image3.png" alt="image3" width="240"></img><br>|
 |:-----:|:---------:|
 |Filter restudies by restaurant name|<br><img src="images/image4.png" alt="image4" width="240"></img><br>|
 
