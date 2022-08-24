@@ -28,25 +28,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zm.letseat.R
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
-import previewEmptyUiState
-import previewLoadingUiState
+import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2, heightDp = 500)
 @Composable
 fun RestaurantsListScreenPreview() {
     val modifier = Modifier
-    val uiState = previewEmptyUiState
-    RestaurantsListScreenContent(modifier, uiState) {}
+    val uiState = previewLoadedUiState
+    RestaurantsListScreenContent(modifier, uiState, {}, "", {})
 }
 
 @Composable
 fun RestaurantsListScreen(viewModel: RestaurantsListViewModel = viewModel()) {
     val modifier = Modifier
     val uiState = viewModel.uiState
-    RestaurantsListScreenContent(modifier, uiState) {
-        viewModel.loadRestaurantsList(it)
+    val lastSelectedSortOption = remember {
+        mutableStateOf<RestaurantSortOption?>(null)
     }
+    val searchTextState = remember { mutableStateOf("") }
+
+    RestaurantsListScreenContent(
+        modifier, uiState,
+        {
+            lastSelectedSortOption.value = it
+            viewModel.loadRestaurantsList(it)
+        }, searchTextState.value, { searchText ->
+            searchTextState.value = searchText
+            viewModel.filterRestaurant(
+                searchText
+            )
+        }
+    )
 }
 
 @Composable
@@ -54,8 +67,12 @@ fun RestaurantsListScreenContent(
     modifier: Modifier.Companion,
     uiState: RestaurantsListUiState,
     onSortOptionChanged: (RestaurantSortOption) -> Unit,
+    searchText: String,
+    onValueChanged: (String) -> Unit,
 ) {
-    val sortingActionEnabled = (uiState.loading || uiState.restaurants.isEmpty()).not()
+    val sortingActionEnabled = (
+            uiState.loading || uiState.restaurants.isEmpty() || uiState.filter
+            ).not()
     Scaffold(
         topBar = {
             RestaurantsListTopAppBar(modifier, sortingActionEnabled, onSortOptionChanged)
@@ -65,12 +82,16 @@ fun RestaurantsListScreenContent(
         if (uiState.loading) {
             RestaurantsListLoading()
         } else {
-            if (uiState.restaurants.isEmpty()) {
+            if (uiState.filter.not() && uiState.restaurants.isEmpty()) {
                 RestaurantsListEmpty()
             } else {
-                RestaurantsList(modifier.padding(padding),
-                    uiState.sortByOption,
-                    uiState.restaurants)
+                RestaurantsList(
+                    modifier = modifier.padding(padding),
+                    sortingOption = uiState.sortByOption,
+                    restaurantList = uiState.restaurants,
+                    searchText = searchText,
+                    onValueChanged = onValueChanged
+                )
             }
         }
     }
@@ -120,7 +141,7 @@ private fun SortingOptionsDropDownMenu(
             onDismissRequest = { expanded.value = false },
             modifier = Modifier.background(MaterialTheme.colors.surface)
         ) {
-            RestaurantSortOption.values().forEach { sortOption ->
+            values().forEach { sortOption ->
                 DropdownMenuItem(onClick = {
                     expanded.value = false
                     onSortOptionChanged(sortOption)
