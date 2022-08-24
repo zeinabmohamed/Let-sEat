@@ -1,4 +1,4 @@
-package com.zm.letseat.restaurantslist.data.util
+package com.zm.letseat.data.util
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

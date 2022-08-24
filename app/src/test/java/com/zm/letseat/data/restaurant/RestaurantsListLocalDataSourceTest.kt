@@ -1,4 +1,4 @@
-package com.zm.letseat.restaurantslist.data
+package com.zm.letseat.data.restaurant
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
