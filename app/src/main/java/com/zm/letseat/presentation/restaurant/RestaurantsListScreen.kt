@@ -1,5 +1,6 @@
 package com.zm.letseat.presentation.restaurant
 
+import RestaurantsListEmpty
 import RestaurantsListLoading
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zm.letseat.R
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
+import previewEmptyUiState
 import previewLoadingUiState
 
 
@@ -34,7 +36,7 @@ import previewLoadingUiState
 @Composable
 fun RestaurantsListScreenPreview() {
     val modifier = Modifier
-    val uiState = previewLoadingUiState
+    val uiState = previewEmptyUiState
     RestaurantsListScreenContent(modifier, uiState) {}
 }
 
@@ -64,7 +66,7 @@ fun RestaurantsListScreenContent(
             RestaurantsListLoading()
         } else {
             if (uiState.restaurants.isEmpty()) {
-                //TODO("Setup empty state")
+                RestaurantsListEmpty()
             } else {
                 RestaurantsList(modifier.padding(padding),
                     uiState.sortByOption,

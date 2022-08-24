@@ -10,6 +10,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildAt
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
@@ -32,7 +33,6 @@ class RestaurantsListScreenTest {
         composeTestRule.onNodeWithTag("restaurantsListTag").assertDoesNotExist()
         composeTestRule.onNodeWithText("Loading").assertIsDisplayed()
         composeTestRule.onNodeWithTag("LoadingProgressIndicator").assertIsDisplayed()
-
     }
 
     @Test
@@ -55,6 +55,19 @@ class RestaurantsListScreenTest {
             .assert(hasAnyChild(hasText("22")))
 
     }
+
+    @Test
+    fun `validateEmptyStateRestaurantsListScreenContent`() {
+        // Start the app
+        composeTestRule.setContent {
+            RestaurantsListScreenContent(Modifier, uiState = previewEmptyUiState, {})
+        }
+        composeTestRule.onNodeWithText("Restaurants list").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("restaurantsListTag").assertDoesNotExist()
+        composeTestRule.onNodeWithText("Loading").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("LoadingProgressIndicator").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Empty List Img").assertIsDisplayed()
+    }
 }
 
 private val previewLoadingUiState = RestaurantsListUiState(
@@ -69,4 +82,9 @@ private val previewLoadedUiState = RestaurantsListUiState(
             status = RestaurantStatus.CLOSED.toString(),
             sortingValue = "22"),
     )
+)
+private val previewEmptyUiState = RestaurantsListUiState(
+    loading = false,
+    sortByOption = RestaurantSortOption.RATING,
+    restaurants = emptyList()
 )
