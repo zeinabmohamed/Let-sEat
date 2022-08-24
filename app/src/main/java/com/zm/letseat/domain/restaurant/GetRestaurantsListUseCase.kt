@@ -1,5 +1,6 @@
 package com.zm.letseat.domain.restaurant
 
+import androidx.lifecycle.DEFAULT_ARGS_KEY
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
@@ -14,10 +15,24 @@ class GetRestaurantsListUseCase @Inject constructor(
     private val restaurantRepository: IRestaurantRepository,
     private val mapper: RestaurantEntityMapper,
 ) {
-    suspend operator fun invoke(sortBy: RestaurantSortOption = STATUS): List<RestaurantEntity> {
-        return restaurantRepository.getRestaurants().map {
-            mapper.mapToDomain(it)
-        }.sortedByOption(sortBy)
+
+    companion object {
+        private val DEFAULT_SORT_OPTION = STATUS
+    }
+
+    suspend operator fun invoke(selectedSelectedOption: RestaurantSortOption? = null): Pair<RestaurantSortOption, List<RestaurantEntity>> {
+        (selectedSelectedOption
+            ?: restaurantRepository.getLastSortOption()
+            ?: DEFAULT_SORT_OPTION).let { sortBy ->
+            return restaurantRepository.getRestaurants().map {
+                mapper.mapToDomain(it)
+            }.sortedByOption(sortBy).let {
+                // business update : retain sort last sort option
+                // will save it in case of success result
+                restaurantRepository.saveSortOption(sortBy)
+                Pair(sortBy, it)
+            }
+        }
     }
 
     private fun List<RestaurantEntity>.sortedByOption(sortBy: RestaurantSortOption): List<RestaurantEntity> {

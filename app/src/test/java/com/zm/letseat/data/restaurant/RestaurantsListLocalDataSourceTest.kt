@@ -8,6 +8,7 @@ import com.zm.letseat.data.model.RestaurantsListResponse
 import com.zm.letseat.data.model.SortingValues
 import com.zm.letseat.data.restaurant.RestaurantLocalDataSource
 import com.zm.letseat.data.util.FileLoader
+import com.zm.letseat.data.util.LocalCacheManager
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -24,9 +25,11 @@ class RestaurantsListLocalDataSourceTest {
         .addLast(KotlinJsonAdapterFactory())
         .build()
     private val fileLoaderMock = mockk<FileLoader>()
+    private val localCacheManager = mockk<LocalCacheManager>()
     private val sut = RestaurantLocalDataSource(
         fileLoader = fileLoaderMock,
-        moshi = moshi
+        moshi = moshi,
+        localCacheManager = localCacheManager
     )
 
     @Test

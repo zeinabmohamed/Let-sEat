@@ -3,14 +3,17 @@ package com.zm.letseat.domain.restaurant
 import com.zm.letseat.data.model.Restaurant
 import com.zm.letseat.data.model.SortingValues
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
+import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.mapper.RestaurantEntityMapper
 import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 
 class GetRestaurantsListUseCaseTest {
@@ -20,9 +23,16 @@ class GetRestaurantsListUseCaseTest {
         mapper = RestaurantEntityMapper()
     )
 
+    @Before
+    fun setup() {
+        every { repository.saveSortOption(any()) } answers {}
+    }
+
     @Test
     fun `GetRestaurantsList return default order by status`() = runBlockingTest {
         // Given
+        every { repository.getLastSortOption() } returns null
+
         coEvery { repository.getRestaurants() } returns listOf(
             Restaurant(name = "item1", status = "closed"),
             Restaurant(name = "item2", status = "open"),
@@ -31,14 +41,47 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", status = "closed"),
             Restaurant(name = "item6", status = "order ahead")
         )
-        val expected = listOf(
+        val expected = Pair(STATUS, listOf(
             RestaurantEntity(name = "item2", status = RestaurantStatus.OPEN),
             RestaurantEntity(name = "item4", status = RestaurantStatus.OPEN),
             RestaurantEntity(name = "item3", status = RestaurantStatus.ORDER_AHEAD),
             RestaurantEntity(name = "item6", status = RestaurantStatus.ORDER_AHEAD),
             RestaurantEntity(name = "item1", status = RestaurantStatus.CLOSED),
             RestaurantEntity(name = "item5", status = RestaurantStatus.CLOSED)
+        ))
+        // Act
+        val actual = sut.invoke()
+        // Assert
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `GetRestaurantsList return default order by lastSelectedSortOption`() = runBlockingTest {
+        // Given
+        every { repository.getLastSortOption() } returns RATING
+
+        coEvery { repository.getRestaurants() } returns listOf(
+            Restaurant(name = "item1", sortingValues = SortingValues(ratingAverage = 7f)),
+            Restaurant(name = "item2", sortingValues = SortingValues(ratingAverage = 2.2f)),
+            Restaurant(name = "item3", sortingValues = SortingValues(ratingAverage = 1.2f)),
+            Restaurant(name = "item4", sortingValues = SortingValues(ratingAverage = 0f)),
+            Restaurant(name = "item5", sortingValues = SortingValues(ratingAverage = 2f)),
+            Restaurant(name = "item6", sortingValues = SortingValues(ratingAverage = 4f))
         )
+        val expected = Pair(RATING, listOf(
+            RestaurantEntity(name = "item1",
+                sortingValues = SortingValuesEntity(ratingAverage = 7f)),
+            RestaurantEntity(name = "item6",
+                sortingValues = SortingValuesEntity(ratingAverage = 4f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(ratingAverage = 2.2f)),
+            RestaurantEntity(name = "item5",
+                sortingValues = SortingValuesEntity(ratingAverage = 2f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(ratingAverage = 1.2f)),
+            RestaurantEntity(name = "item4",
+                sortingValues = SortingValuesEntity(ratingAverage = 0f))
+        ))
         // Act
         val actual = sut.invoke()
         // Assert
@@ -56,7 +99,7 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(popularity = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(popularity = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(POPULARITY, listOf(
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(popularity = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(popularity = 4f)),
             RestaurantEntity(name = "item2",
@@ -65,9 +108,9 @@ class GetRestaurantsListUseCaseTest {
             RestaurantEntity(name = "item3",
                 sortingValues = SortingValuesEntity(popularity = 1.2f)),
             RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(popularity = 0f))
-        )
+        ))
         // Act
-        val actual = sut.invoke(sortBy = POPULARITY)
+        val actual = sut.invoke(selectedSelectedOption = POPULARITY)
         // Assert
         assertEquals(expected, actual)
     }
@@ -83,14 +126,14 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(bestMatch = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(bestMatch = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(BEST_MATCH, listOf(
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(bestMatch = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(bestMatch = 4f)),
             RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(bestMatch = 2.2f)),
             RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(bestMatch = 2f)),
             RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(bestMatch = 1.2f)),
             RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(bestMatch = 0f))
-        )
+        ))
         // Act
         val actual = sut.invoke(BEST_MATCH)
         // Assert
@@ -108,14 +151,14 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(newest = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(newest = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(NEWEST, listOf(
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(newest = 7f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(newest = 4f)),
             RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(newest = 2.2f)),
             RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(newest = 2f)),
             RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(newest = 1.2f)),
             RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(newest = 0f))
-        )
+        ))
         // Act
         val actual = sut.invoke(NEWEST)
         // Assert
@@ -133,14 +176,20 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(ratingAverage = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(ratingAverage = 4f))
         )
-        val expected = listOf(
-            RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(ratingAverage = 7f)),
-            RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(ratingAverage = 4f)),
-            RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(ratingAverage = 2.2f)),
-            RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(ratingAverage = 2f)),
-            RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(ratingAverage = 1.2f)),
-            RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(ratingAverage = 0f))
-        )
+        val expected = Pair(RATING, listOf(
+            RestaurantEntity(name = "item1",
+                sortingValues = SortingValuesEntity(ratingAverage = 7f)),
+            RestaurantEntity(name = "item6",
+                sortingValues = SortingValuesEntity(ratingAverage = 4f)),
+            RestaurantEntity(name = "item2",
+                sortingValues = SortingValuesEntity(ratingAverage = 2.2f)),
+            RestaurantEntity(name = "item5",
+                sortingValues = SortingValuesEntity(ratingAverage = 2f)),
+            RestaurantEntity(name = "item3",
+                sortingValues = SortingValuesEntity(ratingAverage = 1.2f)),
+            RestaurantEntity(name = "item4",
+                sortingValues = SortingValuesEntity(ratingAverage = 0f))
+        ))
         // Act
         val actual = sut.invoke(RATING)
         // Assert
@@ -158,14 +207,14 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(distance = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(distance = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(DISTANCE, listOf(
             RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(distance = 0f)),
             RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(distance = 1.2f)),
             RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(distance = 2f)),
             RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(distance = 2.2f)),
             RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(distance = 4f)),
             RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(distance = 7f))
-        )
+        ))
         // Act
         val actual = sut.invoke(DISTANCE)
         // Assert
@@ -184,7 +233,7 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(averageProductPrice = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(averageProductPrice = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(PRODUCT_PRICE, listOf(
             RestaurantEntity(name = "item4",
                 sortingValues = SortingValuesEntity(averageProductPrice = 0f)),
             RestaurantEntity(name = "item3",
@@ -197,7 +246,7 @@ class GetRestaurantsListUseCaseTest {
                 sortingValues = SortingValuesEntity(averageProductPrice = 4f)),
             RestaurantEntity(name = "item1",
                 sortingValues = SortingValuesEntity(averageProductPrice = 7f))
-        )
+        ))
         // Act
         val actual = sut.invoke(PRODUCT_PRICE)
         // Assert
@@ -215,7 +264,7 @@ class GetRestaurantsListUseCaseTest {
             Restaurant(name = "item5", sortingValues = SortingValues(deliveryCosts = 2f)),
             Restaurant(name = "item6", sortingValues = SortingValues(deliveryCosts = 4f))
         )
-        val expected = listOf(
+        val expected = Pair(DELIVERY_FEES, listOf(
             RestaurantEntity(name = "item4",
                 sortingValues = SortingValuesEntity(deliveryCosts = 0f)),
             RestaurantEntity(name = "item3",
@@ -228,7 +277,7 @@ class GetRestaurantsListUseCaseTest {
                 sortingValues = SortingValuesEntity(deliveryCosts = 4f)),
             RestaurantEntity(name = "item1",
                 sortingValues = SortingValuesEntity(deliveryCosts = 7f))
-        )
+        ))
         // Act
         val actual = sut.invoke(DELIVERY_FEES)
         // Assert
@@ -248,14 +297,16 @@ class GetRestaurantsListUseCaseTest {
                 Restaurant(name = "item5", sortingValues = SortingValues(minCost = 2f)),
                 Restaurant(name = "item6", sortingValues = SortingValues(minCost = 4f))
             )
-            val expected = listOf(
+            val expected = Pair(MIN_COST, listOf(
                 RestaurantEntity(name = "item4", sortingValues = SortingValuesEntity(minCost = 0f)),
-                RestaurantEntity(name = "item3", sortingValues = SortingValuesEntity(minCost = 1.2f)),
+                RestaurantEntity(name = "item3",
+                    sortingValues = SortingValuesEntity(minCost = 1.2f)),
                 RestaurantEntity(name = "item5", sortingValues = SortingValuesEntity(minCost = 2f)),
-                RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(minCost = 2.2f)),
+                RestaurantEntity(name = "item2",
+                    sortingValues = SortingValuesEntity(minCost = 2.2f)),
                 RestaurantEntity(name = "item6", sortingValues = SortingValuesEntity(minCost = 4f)),
                 RestaurantEntity(name = "item1", sortingValues = SortingValuesEntity(minCost = 7f))
-            )
+            ))
             // Act
             val actual = sut.invoke(MIN_COST)
             // Assert

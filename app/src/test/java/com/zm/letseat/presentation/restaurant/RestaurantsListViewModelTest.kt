@@ -3,6 +3,7 @@ package com.zm.letseat.presentation.restaurant
 import com.zm.letseat.domain.restaurant.GetRestaurantsListUseCase
 import com.zm.letseat.domain.restaurant.entity.RestaurantEntity
 import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption
+import com.zm.letseat.domain.restaurant.entity.RestaurantSortOption.*
 import com.zm.letseat.domain.restaurant.entity.RestaurantStatus
 import com.zm.letseat.domain.restaurant.entity.SortingValuesEntity
 import com.zm.letseat.presentation.restaurant.model.RestaurantUi
@@ -20,15 +21,13 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RestaurantsListViewModelTest {
-    private val givenSortedRestaurantsListByStatus: List<RestaurantEntity> =
-        listOf(RestaurantEntity(name = "item1",
-            status = RestaurantStatus.ORDER_AHEAD))
+    private val givenSortedRestaurantsListByStatus =
+        Pair(STATUS, listOf(RestaurantEntity(name = "item1",
+            status = RestaurantStatus.ORDER_AHEAD)))
 
-    private val givenSortedRestaurantsListByRating: List<RestaurantEntity> =
-        listOf(RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(
-            ratingAverage = 22f
-        ),
-            status = RestaurantStatus.ORDER_AHEAD))
+    private val givenSortedRestaurantsListByRating =
+        Pair(RATING, listOf(RestaurantEntity(name = "item2", sortingValues = SortingValuesEntity(
+            ratingAverage = 22f), status = RestaurantStatus.ORDER_AHEAD)))
 
     private val expectedSortedRestaurantsListByStatus: List<RestaurantUi> =
         listOf(RestaurantUi(name = "item1",
@@ -50,13 +49,11 @@ class RestaurantsListViewModelTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
         coEvery {
-            getRestaurantsListUseCaseMocked(
-                sortBy = RestaurantSortOption.STATUS
-            )
+            getRestaurantsListUseCaseMocked()
         } returns givenSortedRestaurantsListByStatus
         coEvery {
             getRestaurantsListUseCaseMocked(
-                sortBy = RestaurantSortOption.RATING
+                selectedSelectedOption = RATING
             )
         } returns givenSortedRestaurantsListByRating
         sut = RestaurantsListViewModel(
@@ -68,7 +65,7 @@ class RestaurantsListViewModelTest {
     fun `initial state load restaurants sorted by Status`() {
         // Given
         val expectDefaultUiState = RestaurantsListUiState(
-            sortByOption = RestaurantSortOption.STATUS,
+            sortByOption = STATUS,
             restaurants = expectedSortedRestaurantsListByStatus
         )
         // Assert
@@ -79,11 +76,11 @@ class RestaurantsListViewModelTest {
     fun `load restaurants sorted by Rating`() {
         // Given
         val expectDefaultUiState = RestaurantsListUiState(
-            sortByOption = RestaurantSortOption.RATING,
+            sortByOption = RATING,
             restaurants = expectedSortedRestaurantsListByRating
         )
         // Act
-        sut.loadRestaurantsList(RestaurantSortOption.RATING)
+        sut.loadRestaurantsList(RATING)
         // Assert
         assertEquals(expectDefaultUiState, sut.uiState)
     }
