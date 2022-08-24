@@ -16,7 +16,7 @@ import com.zm.letseat.presentation.restaurant.RestaurantsListUiState
 
 @Composable
 @Preview
-fun RestaurantsListLoading(
+internal fun RestaurantsListLoading(
     modifier :Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
