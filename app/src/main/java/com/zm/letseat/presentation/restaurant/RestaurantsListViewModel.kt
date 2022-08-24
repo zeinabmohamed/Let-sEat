@@ -24,24 +24,25 @@ class RestaurantsListViewModel @Inject constructor(
         private set
 
     init {
-        // initial state load restaurants sorted by [RestaurantSortOption.STATUS]
-        loadRestaurantsList(defaultSortByOption)
+        // initial state load restaurants sorted by [RestaurantSortOption.STATUS] or last stored sort option
+        loadRestaurantsList()
     }
 
     fun loadRestaurantsList(
-        sortByOption: RestaurantSortOption = defaultSortByOption,
+        sortByOption: RestaurantSortOption? = null,
     ) {
         viewModelScope.launch {
             uiState = RestaurantsListUiState(loading = true)
-            val restaurantsList = getRestaurantsListUseCase.invoke(sortByOption).map {
+            val result = getRestaurantsListUseCase.invoke(sortByOption)
+            val restaurantsList = result.second.map {
                 RestaurantUi(
                     name = it.name,
                     status = it.status.toString(),
-                    sortingValue = (it sortedBy sortByOption))
+                    sortingValue = (it sortedBy result.first))
             }
             uiState = RestaurantsListUiState(
                 loading = false,
-                sortByOption = sortByOption,
+                sortByOption = result.first,
                 restaurants = restaurantsList
             )
         }
